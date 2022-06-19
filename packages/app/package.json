@@ -8,10 +8,15 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@fortawesome/fontawesome-free": "^6.1.1",
+    "@quasar/extras": "^1.14.0",
+    "quasar": "^2.7.2",
     "vue": "^3.2.25"
   },
   "devDependencies": {
+    "@quasar/vite-plugin": "^1.0.10",
     "@vitejs/plugin-vue": "^2.3.3",
+    "sass": "1.32.12",
     "vite": "^2.9.9"
   }
 }
