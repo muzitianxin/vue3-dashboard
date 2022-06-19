@@ -1,10 +1,12 @@
 <script lang="ts" setup>
 import { defineProps } from "vue";
+import { useMenu } from "../../uses/use-menu";
 
 // components
 import Logo from "./Logo.vue";
 import FoldToggle from "./FoldToggle.vue";
-import { useMenu } from "../../uses/use-menu";
+import Menu from "./Menu/index.vue";
+import UserProfile from "./UserProfile.vue";
 
 // props
 defineProps({ menus: { type: Array, default: () => [] } });
@@ -19,7 +21,14 @@ const { foldMenu } = useMenu();
     class="full-height column no-wrap transition-1"
     :class="{ fold: foldMenu }"
   >
-    <Logo />
+    <Logo class="q-pt-lg q-pb-md" />
+    <q-scroll-area
+      class="full-width column col-grow"
+      style="overflow-x: hidden"
+    >
+      <Menu />
+    </q-scroll-area>
+    <UserProfile />
     <FoldToggle class="fold-toggle" />
   </div>
 </template>
@@ -27,7 +36,7 @@ const { foldMenu } = useMenu();
 <style lang="scss">
 #app-menu {
   width: 220px;
-  background: white;
+  background: var(--app-menu-bg);
   box-shadow: 2px 0px 15px rgba(0, 0, 0, 0.01);
   position: relative;
 

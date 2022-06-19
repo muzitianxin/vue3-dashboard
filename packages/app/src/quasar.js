@@ -10,6 +10,9 @@ import "@fortawesome/fontawesome-free/css/regular.min.css";
 // Import Quasar css
 import "quasar/src/css/index.sass";
 
+// Import override css
+import "./styles/quasar.override.scss";
+
 export default {
   config: {},
   plugins: {
