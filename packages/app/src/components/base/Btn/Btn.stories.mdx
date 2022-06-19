@@ -1,0 +1,382 @@
+import Btn from "./Btn.vue";
+
+import { Canvas, Meta, Story, ArgsTable } from "@storybook/addon-docs";
+import { ref } from "vue";
+import { debounce } from "quasar";
+
+<Meta
+  title="Base/Btn"
+  component={Btn}
+  argTypes={{
+    icon: {
+      description: "按钮的图标",
+      table: {
+        type: {
+          summary: "Fontawesome Icon",
+          detail: "完整的 Fontawesome 类名",
+        },
+        defaultValue: { summary: null },
+      },
+    },
+    disable: {
+      description: "是否禁用",
+      table: {
+        type: { summary: "boolean" },
+        defaultValue: { summary: "false" },
+      },
+    },
+    loading: {
+      description: "是否加载中",
+      table: {
+        type: { summary: "boolean" },
+        defaultValue: { summary: "false" },
+      },
+    },
+    shape: {
+      description: "按钮形状",
+      table: {
+        type: { summary: "string" },
+        defaultValue: { summary: "normal" },
+      },
+      control: {
+        type: "select",
+      },
+      options: ["normal", "round", "circle", "square"],
+    },
+    color: {
+      description: "按钮颜色",
+      table: {
+        type: {
+          summary: "Quasar Color Variable",
+          detail: "Quasar 中定义的颜色的值",
+        },
+        defaultValue: { summary: "primary" },
+      },
+      control: {
+        type: "text",
+      },
+    },
+    textColor: {
+      description: "按钮的文字颜色（仅在 “fill” 模式下有效）",
+      table: {
+        type: {
+          summary: "Quasar Color Variable",
+          detail: "Quasar 中定义的颜色的值",
+        },
+        defaultValue: { summary: "white" },
+      },
+      control: {
+        type: "text",
+      },
+    },
+    type: {
+      description: "按钮的类型",
+      table: {
+        type: { summary: "string" },
+        defaultValue: { summary: "fill" },
+      },
+      control: {
+        type: "select",
+      },
+      options: ["fill", "flat", "translucent"],
+    },
+    bordered: {
+      description: "是否显示边框（在 “fill” 模式下无效）",
+      table: {
+        type: { summary: "boolean" },
+        defaultValue: { summary: "false" },
+      },
+    },
+    dot: {
+      description: "通知数量，在图标上显示通知数，小于0时不显示",
+    },
+    dotMax: {
+      description: "通知数量的最大值",
+    },
+    shadowed: {
+      description: "是否显示阴影",
+    },
+    to: {
+      description: "按钮的跳转的 Vue 路由对象",
+      table: {
+        type: { summary: "RouteLocationRaw" },
+        defaultValue: { summary: "undefined" },
+      },
+    },
+    href: {
+      description: "按钮跳转的链接",
+    },
+  }}
+/>
+
+export const Template = (args) => ({
+  components: { Btn },
+  setup() {
+    return { args };
+  },
+  template: `<Btn v-bind="args" />`,
+});
+
+# 基本使用
+
+<Canvas>
+  <Story
+    name="Basic"
+    args={{
+      label: "Click me",
+      icon: "fas fa-plus-circle",
+    }}
+  >
+    {Template.bind({})}
+  </Story>
+</Canvas>
+
+<ArgsTable story="Basic" />
+
+# 形状
+
+<Canvas>
+  <Story name="Shape">
+    {(args) => ({
+      components: { Btn },
+      setup() {
+        return { args };
+      },
+      template: `
+        <Btn class="q-mr-sm" label="Normal" shape="normal" />
+        <Btn class="q-mr-sm" label="Round" shape="round" />
+        <Btn class="q-mr-sm" icon="fas fa-plus" shape="square" />
+        <Btn class="q-mr-sm" icon="fas fa-plus" shape="circle" />
+      `,
+    })}
+  </Story>
+</Canvas>
+
+# 风格
+
+通过 `type` 属性可以指定按钮的风格，可选值为：
+
+- `fill`: 纯色填充
+- `flat`： 扁平化
+- `translucent`: 半透明
+
+通过 `bordered` 属性可以指定是否显示边框，在 `fill` 模式下无效。
+
+通过 `shadowed` 属性可以指定是否显示阴影
+
+<Canvas>
+  <Story name="Style">
+    {() => ({
+      components: { Btn },
+      setup() {
+        return {};
+      },
+      template: `
+        <div class="q-mb-sm row items-center">
+          <div style="width: 160px" class="text-caption">Fill</div>
+          <Btn type="fill" class="q-mr-sm" label="Click Me" shape="normal" />
+          <Btn type="fill" class="q-mr-sm" label="Click Me" shape="round" />
+          <Btn type="fill" class="q-mr-sm" icon="fas fa-plus" shape="square" />
+          <Btn type="fill" class="q-mr-sm" icon="fas fa-plus" shape="circle" />
+        </div>
+        <div class="q-mb-sm row items-center">
+          <div style="width: 160px" class="text-caption">Translucent</div>
+          <Btn type="translucent" class="q-mr-sm" label="Click Me" shape="normal" />
+          <Btn type="translucent" class="q-mr-sm" label="Click Me" shape="round" />
+          <Btn type="translucent" class="q-mr-sm" icon="fas fa-plus" shape="square" />
+          <Btn type="translucent" class="q-mr-sm" icon="fas fa-plus" shape="circle" />
+        </div>
+        <div class="q-mb-sm row items-center">
+          <div style="width: 160px" class="text-caption">Flat</div>
+          <Btn type="flat" class="q-mr-sm" label="Click Me" shape="normal" />
+          <Btn type="flat" class="q-mr-sm" label="Click Me" shape="round" />
+          <Btn type="flat" class="q-mr-sm" icon="fas fa-plus" shape="square" />
+          <Btn type="flat" class="q-mr-sm" icon="fas fa-plus" shape="circle" />
+        </div>
+        <div class="q-mb-sm row items-center">
+          <div style="width: 160px" class="text-caption">Outline + Translucent</div>
+          <Btn bordered type="translucent" class="q-mr-sm" label="Click Me" shape="normal" />
+          <Btn bordered type="translucent" class="q-mr-sm" label="Click Me" shape="round" />
+          <Btn bordered type="translucent" class="q-mr-sm" icon="fas fa-plus" shape="square" />
+          <Btn bordered type="translucent" class="q-mr-sm" icon="fas fa-plus" shape="circle" />
+        </div>
+        <div class="q-mb-sm row items-center">
+          <div style="width: 160px" class="text-caption">Outline + Flat</div>
+          <Btn bordered type="flat" class="q-mr-sm" label="Click Me" shape="normal" />
+          <Btn bordered type="flat" class="q-mr-sm" label="Click Me" shape="round" />
+          <Btn bordered type="flat" class="q-mr-sm" icon="fas fa-plus" shape="square" />
+          <Btn bordered type="flat" class="q-mr-sm" icon="fas fa-plus" shape="circle" />
+        </div>
+        <div class="q-mb-sm row items-center">
+          <div style="width: 160px" class="text-caption">Fill + Shadow</div>
+          <Btn bordered shadowed class="q-mr-sm" label="Click Me" shape="normal" />
+          <Btn bordered shadowed class="q-mr-sm" label="Click Me" shape="round" />
+          <Btn bordered shadowed class="q-mr-sm" icon="fas fa-plus" shape="square" />
+          <Btn bordered shadowed class="q-mr-sm" icon="fas fa-plus" shape="circle" />
+        </div>
+      `,
+    })}
+  </Story>
+</Canvas>
+
+# 状态
+
+<Canvas>
+  <Story name="Status">
+    {(args) => ({
+      components: { Btn },
+      setup() {
+        return {};
+      },
+      template: `
+        <div class="q-mb-sm row items-center">
+          <div style="width: 80px" class="text-caption">Normal</div>
+          <Btn class="q-mr-sm" label="Click Me" shape="normal" />
+          <Btn class="q-mr-sm" label="Click Me" shape="round" />
+          <Btn class="q-mr-sm" icon="fas fa-plus" shape="square" />
+          <Btn class="q-mr-sm" icon="fas fa-plus" shape="circle" />
+        </div>
+        <div class="q-mb-sm row items-center">
+          <div style="width: 80px" class="text-caption">Disabled</div>
+          <Btn :disable="true" class="q-mr-sm" label="Click Me" shape="normal" />
+          <Btn :disable="true" class="q-mr-sm" label="Click Me" shape="round" />
+          <Btn :disable="true" class="q-mr-sm" icon="fas fa-plus" shape="square" />
+          <Btn :disable="true" class="q-mr-sm" icon="fas fa-plus" shape="circle" />
+        </div>
+        <div class="q-mb-sm row items-center">
+          <div style="width: 80px" class="text-caption">Loading</div>
+          <Btn :loading="true" class="q-mr-sm" label="Click Me" shape="normal" />
+          <Btn :loading="true" class="q-mr-sm" label="Click Me" shape="round" />
+          <Btn :loading="true" class="q-mr-sm" icon="fas fa-plus" shape="square" />
+          <Btn :loading="true" class="q-mr-sm" icon="fas fa-plus" shape="circle" />
+        </div>
+      `,
+    })}
+  </Story>
+</Canvas>
+
+# 颜色
+
+使用 `color` 指定按钮的颜色，**必须是 `quasar` 的颜色名称**
+
+<Canvas>
+  <Story name="Colors">
+    {() => ({
+      components: { Btn },
+      setup() {
+        return {};
+      },
+      template: `
+        <div class="q-mb-sm row items-center">
+          <Btn class="q-mr-sm" label="Click Me" />
+          <Btn type="translucent" class="q-mr-sm" label="Click Me" />
+          <Btn bordered type="translucent" class="q-mr-sm" icon="fas fa-plus" />
+          <Btn bordered type="flat" class="q-mr-sm" icon="fas fa-plus" />
+          <Btn type="flat" class="q-mr-sm" icon="fas fa-plus" />
+        </div>
+        <div class="q-mb-sm row items-center">
+          <Btn color="secondary" class="q-mr-sm" label="Click Me" />
+          <Btn color="secondary" type="translucent" class="q-mr-sm" label="Click Me" />
+          <Btn color="secondary" bordered type="translucent" class="q-mr-sm" icon="fas fa-plus" />
+          <Btn color="secondary" bordered type="flat" class="q-mr-sm" icon="fas fa-plus" />
+          <Btn color="secondary" type="flat" class="q-mr-sm" icon="fas fa-plus" />
+        </div>
+        <div class="q-mb-sm row items-center">
+          <Btn color="positive" class="q-mr-sm" label="Click Me" />
+          <Btn color="positive" type="translucent" class="q-mr-sm" label="Click Me" />
+          <Btn color="positive" bordered type="translucent" class="q-mr-sm" icon="fas fa-plus" />
+          <Btn color="positive" bordered type="flat" class="q-mr-sm" icon="fas fa-plus" />
+          <Btn color="positive" type="flat" class="q-mr-sm" icon="fas fa-plus" />
+        </div>
+        <div class="q-mb-sm row items-center">
+          <Btn color="negative" class="q-mr-sm" label="Click Me" />
+          <Btn color="negative" type="translucent" class="q-mr-sm" label="Click Me" />
+          <Btn color="negative" bordered type="translucent" class="q-mr-sm" icon="fas fa-plus" />
+          <Btn color="negative" bordered type="flat" class="q-mr-sm" icon="fas fa-plus" />
+          <Btn color="negative" type="flat" class="q-mr-sm" icon="fas fa-plus" />
+        </div>
+        <div class="q-mb-sm row items-center">
+          <Btn color="warning" class="q-mr-sm" label="Click Me" />
+          <Btn color="warning" type="translucent" class="q-mr-sm" label="Click Me" />
+          <Btn color="warning" bordered type="translucent" class="q-mr-sm" icon="fas fa-plus" />
+          <Btn color="warning" bordered type="flat" class="q-mr-sm" icon="fas fa-plus" />
+          <Btn color="warning" type="flat" class="q-mr-sm" icon="fas fa-plus" />
+        </div>
+        <div class="q-mb-sm row items-center">
+          <Btn color="info" class="q-mr-sm" label="Click Me" />
+          <Btn color="info" type="translucent" class="q-mr-sm" label="Click Me" />
+          <Btn color="info" bordered type="translucent" class="q-mr-sm" icon="fas fa-plus" />
+          <Btn color="info" bordered type="flat" class="q-mr-sm" icon="fas fa-plus" />
+          <Btn color="info" type="flat" class="q-mr-sm" icon="fas fa-plus" />
+        </div>
+      `,
+    })}
+  </Story>
+</Canvas>
+
+# 内容
+
+使用 `label` 指定按钮的文本，使用 `icon` 指定按钮的图标：
+
+- 如果指定 `icon` 未指定 `label`, 自动变换为方形/圆形
+- 如果指定形状为 `square` | `circle`，则标签会隐藏 (以 `tooltip` 的形式呈现)
+
+<Canvas>
+  <Story name="Content">
+    {(args) => ({
+      components: { Btn },
+      setup() {
+        return {};
+      },
+      template: `
+        <div class="q-mb-sm">
+          <Btn class="q-mr-sm" label="Click" />
+          <Btn class="q-mr-sm" label="Click" icon="fas fa-dog" />
+          <Btn class="q-mr-sm" icon="fas fa-dog" />
+        </div>
+        <div>
+          <Btn shape="circle" class="q-mr-sm" label="Click" />
+          <Btn shape="circle" class="q-mr-sm" label="Click" icon="fas fa-dog" />
+          <Btn shape="circle" class="q-mr-sm" icon="fas fa-dog" />
+        </div>
+      `,
+    })}
+  </Story>
+</Canvas>
+
+# 通知小红点
+
+使用 `dot` 指定有多少个通知， 设置为 0 时不显示， 使用 `dotMax` 指定最大值
+
+<Canvas>
+  <Story name="NotifyDot">
+    {(args) => ({
+      components: { Btn },
+      setup() {
+        const notifyCount = ref(0);
+        const delayNotify = debounce(() => {
+          setTimeout(() => {
+            notifyCount.value = parseInt((Math.random() * 10).toFixed(0));
+          }, 2000);
+        }, 1000);
+        delayNotify();
+        const handleClick = () => {
+          notifyCount.value = 0;
+          delayNotify();
+        };
+        return {
+          notifyCount,
+          handleClick,
+        };
+      },
+      template: `
+        <Btn class="q-mr-sm" label="提醒" icon="fas fa-bell" :dot="notifyCount" @click="handleClick" />
+        <Btn class="q-mr-sm" icon="fas fa-bell" :dot="notifyCount" @click="handleClick" />
+        <Btn class="q-mr-sm" type="translucent" icon="fas fa-bell" :dot="notifyCount" @click="handleClick" />
+        <Btn class="q-mr-sm" type="flat" icon="fas fa-bell" :dot="notifyCount" @click="handleClick" />
+        <Btn class="q-mr-sm" bordered type="translucent" icon="fas fa-bell" :dot="notifyCount" @click="handleClick" />
+        <Btn class="q-mr-sm" bordered type="flat" icon="fas fa-bell" :dot="notifyCount" @click="handleClick" />
+      `,
+    })}
+  </Story>
+</Canvas>
