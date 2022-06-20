@@ -1,20 +1,9 @@
 <script lang="ts" setup>
-import { ref, watch } from "vue";
 import { useMenu } from "../../uses/use-menu";
 import logo from "../../assets/vue-dashboard-d.svg";
 import text from "../../assets/vue-dashboard-ashboard.svg";
 
 const { foldMenu } = useMenu();
-const timestamp = ref(Date.now());
-
-watch(
-  foldMenu,
-  (val) => {
-    if (val) return;
-    timestamp.value = Date.now();
-  },
-  { immediate: true }
-);
 </script>
 
 <template>
@@ -29,7 +18,10 @@ watch(
         <img :src="logo" />
       </div>
       <div class="ashboard transition-1">
-        <img class="transition-1" :src="text + `?random=${timestamp}`" />
+        <img
+          style="transition: all .23s ease, visibility .2s ease .2s"
+          :src="text + `?timestamp=${Date.now()}`"
+        />
       </div>
     </div>
   </div>
