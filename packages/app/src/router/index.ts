@@ -1,4 +1,5 @@
 import { createRouter, createWebHistory, RouteRecordRaw } from "vue-router";
+import { appMenuItems } from "../components/AppMenu/libs/menu";
 
 const routes: Array<RouteRecordRaw> = [
   { path: "/", redirect: { name: "home" } },
@@ -30,6 +31,24 @@ const routes: Array<RouteRecordRaw> = [
 const router = createRouter({
   history: createWebHistory(process.env.BASE_URL),
   routes,
+});
+
+router.afterEach((to, from) => {
+  const toId = to.path.split("/")[1];
+  const fromId = (from?.path || "").split("/")[1];
+  const toIndex = appMenuItems.findIndex((el) => el.id === toId);
+  const fromIndex = appMenuItems.findIndex((el) => el.id === fromId);
+
+  const noAnimate = toIndex === fromIndex || toIndex === -1 || fromIndex === -1;
+  if (noAnimate) {
+    to.meta.transitionName = undefined;
+  } else if (toIndex > fromIndex) {
+    to.meta.transitionName = "slide-up";
+    from.meta.transitionName = "slide-up";
+  } else {
+    to.meta.transitionName = "slide-down";
+    from.meta.transitionName = "slide-down";
+  }
 });
 
 export default router;

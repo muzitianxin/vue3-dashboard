@@ -6,10 +6,13 @@ import AppMenu from "./components/AppMenu/index.vue";
   <div id="app">
     <div class="_display-frame fit row no-wrap">
       <AppMenu class="full-height" />
-      <router-view
-        class="content-view full-height col-grow"
-        style="width: 0"
-      ></router-view>
+      <div class="col-grow full-height relative-position" style="width: 0">
+        <router-view class="content-view fit" v-slot="{ Component, route }">
+          <transition :name="route.meta.transitionName">
+            <component :is="Component"></component>
+          </transition>
+        </router-view>
+      </div>
     </div>
   </div>
 </template>
@@ -61,5 +64,26 @@ body {
     z-index: 0;
     background: var(--content-bg);
   }
+}
+
+.slide-up-enter-active,
+.slide-up-leave-active,
+.slide-down-enter-active,
+.slide-down-leave-active {
+  transition: all .23s ease;
+  position: absolute !important;
+}
+.slide-up-enter-from {
+  transform: translateY(100%);
+}
+.slide-up-leave-to {
+  transform: translateY(-100%);
+}
+
+.slide-down-enter-from {
+  transform: translateY(-100%);
+}
+.slide-down-leave-to {
+  transform: translateY(100%);
 }
 </style>
