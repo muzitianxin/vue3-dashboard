@@ -67,12 +67,17 @@ body {
 }
 
 .slide-up-enter-active,
-.slide-up-leave-active,
-.slide-down-enter-active,
-.slide-down-leave-active {
-  transition: all .23s ease;
+.slide-down-enter-active {
+  transition: all 0.33s ease;
   position: absolute !important;
 }
+
+.slide-up-leave-active,
+.slide-down-leave-active {
+  transition: all 0.33s ease;
+  position: absolute !important;
+}
+
 .slide-up-enter-from {
   transform: translateY(100%);
 }
