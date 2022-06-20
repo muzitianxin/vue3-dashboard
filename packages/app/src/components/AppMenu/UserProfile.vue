@@ -26,7 +26,7 @@ const { foldMenu } = useMenu();
         <div class="info transition-1">
           <div class="username ellipsis full-width">MuziTianxin</div>
           <div class="user-role text-caption text-grey ellipsis full-width">
-            Admin
+            Administrator
           </div>
         </div>
       </div>
@@ -72,6 +72,7 @@ const { foldMenu } = useMenu();
         transform: scale(0.7);
         transform-origin: top right;
         backdrop-filter: blur(5px) saturate(180%);
+        -webkit-backdrop-filter: blur(5px) saturate(180%);
         text-align: center;
         border-radius: 50%;
         background-color: rgba(255, 255, 255, 0.5);

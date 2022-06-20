@@ -1,1 +1,3 @@
-<template>Chat</template>
+<template>
+  <div>Chat</div>
+</template>

@@ -18,7 +18,7 @@ const { foldMenu } = useMenu();
         <img :src="logo" />
       </div>
       <div class="ashboard transition-1">
-        <img class="transition-1" :src="text" />
+        <img class="transition-1" :src="text + `?random=${Date.now()}`" />
       </div>
     </div>
   </div>

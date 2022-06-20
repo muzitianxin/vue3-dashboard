@@ -4,7 +4,7 @@ import { Quasar } from "quasar";
 import quasarOptions from "./quasar";
 import router from "./router/index";
 import "./styles/common.scss";
-import "./styles/color-schema.scss";
+import "./styles/variables.scss";
 import { registerGlobalComponents } from './global-components';
 
 export const vm = registerGlobalComponents(createApp(App))

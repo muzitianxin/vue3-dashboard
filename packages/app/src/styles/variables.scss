@@ -1,6 +1,10 @@
 // 全局配色配置
 
 body {
+  --view-max-width: 1200px;
+  --view-max-height: 700px;
+  --view-border-radius: 30px;
+
   --content-bg: #f6f6f6;
   --text-color: #34495e;
   

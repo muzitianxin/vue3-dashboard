@@ -24,7 +24,6 @@ const { foldMenu } = useMenu();
     <Logo class="q-pt-lg q-pb-md" />
     <q-scroll-area
       class="full-width column col-grow"
-      style="overflow-x: hidden"
     >
       <Menu />
     </q-scroll-area>
@@ -48,6 +47,7 @@ const { foldMenu } = useMenu();
     position: absolute;
     left: 100%;
     top: 30px;
+    z-index: 9;
   }
 }
 </style>
