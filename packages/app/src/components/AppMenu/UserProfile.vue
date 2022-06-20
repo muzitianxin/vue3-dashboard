@@ -10,7 +10,7 @@ const { foldMenu } = useMenu();
     class="user-profile full-width column items-center transition-1"
     :class="{ fold: foldMenu }"
   >
-    <div class="user-profile-card rounded-borders transition-1" :class="{
+    <div class="user-profile-card transition-1" :class="{
       [`q-pa-${foldMenu ? 'sm' : 'md'}`]: true
     }">
       <div class="row no-wrap">
@@ -45,6 +45,7 @@ const { foldMenu } = useMenu();
 <style lang="scss" scoped>
 .user-profile {
   &-card {
+    border-radius: 16px;
     width: 160px;
     margin-bottom: 30px;
     box-shadow: 25px 26px 40px rgba(0, 0, 0, 0.05);

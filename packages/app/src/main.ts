@@ -5,7 +5,8 @@ import quasarOptions from "./quasar";
 import router from "./router/index";
 import "./styles/common.scss";
 import "./styles/variables.scss";
-import { registerGlobalComponents } from './global-components';
+import "animate.css";
+import { registerGlobalComponents } from "./global-components";
 
 export const vm = registerGlobalComponents(createApp(App))
   .use(Quasar, quasarOptions)
