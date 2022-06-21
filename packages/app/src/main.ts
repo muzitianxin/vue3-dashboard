@@ -1,6 +1,7 @@
 import "animate.css";
 import { createApp } from "vue";
 import { Quasar } from "quasar";
+import { autoAnimatePlugin } from '@formkit/auto-animate/vue'
 
 import App from "./App.vue";
 import router from "./router/index";
@@ -15,5 +16,6 @@ import { vClickOutSide } from "./directives/click-outside.directive";
 export const vm = registerGlobalComponents(createApp(App))
   .use(Quasar, quasarOptions)
   .use(router)
+  .use(autoAnimatePlugin)
   .directive("click-outside", vClickOutSide)
   .mount("#app");

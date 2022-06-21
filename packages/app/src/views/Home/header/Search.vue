@@ -28,6 +28,7 @@ const hide = () => {
       filled
       v-model="keyword"
       for="home-search"
+      style="width: 250px"
     >
       <template v-slot:append>
         <q-icon name="fas fa-search" size="0.8rem" />
@@ -46,7 +47,7 @@ const hide = () => {
           class="home-search-dropdown transition-1 rounded-borders"
         >
           <div class="row no-wrap items-center">
-            <SearchList :keyword="keyword" />
+            <SearchList :keyword="keyword" class="bg-white" />
           </div>
         </div>
       </keep-alive>
@@ -56,7 +57,6 @@ const hide = () => {
 
 <style lang="scss">
 .home-search {
-  max-width: 250px;
   position: relative;
 
   .q-field--filled .q-field__control {
