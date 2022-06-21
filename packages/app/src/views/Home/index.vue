@@ -18,7 +18,7 @@ import GitRef from "./header/GitRef.vue";
     >
       <div class="row no-wrap items-center">
         <Search />
-        <GitRef class="q-ml-sm" />
+        <GitRef class="q-ml-md" />
       </div>
 
       <div></div>

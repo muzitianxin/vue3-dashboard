@@ -1,3 +1,6 @@
+.q-field--filled .q-field__control::before {
+  border-radius: $generic-border-radius !important;
+}
 .q-field--filled.q-field--dense {
   .q-field__control {
     border-radius: $generic-border-radius !important;
@@ -118,7 +121,6 @@ button.q-btn {
   border-radius: 10px;
 }
 
-
 h1,
 .text-h1 {
   font-size: 2rem;
@@ -160,6 +162,11 @@ h6,
   letter-spacing: 0;
 }
 
-h1,h2,h3,h4,h5,h6 {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
   line-height: 1.2;
 }

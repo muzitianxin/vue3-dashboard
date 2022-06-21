@@ -7,13 +7,17 @@ body {
 
   --content-bg: #f6f6f6;
   --text-color: #34495e;
-  
+
   --app-menu-bg: #fbfbfb;
   --app-menu-item-active-bg: #ffffff;
   --app-menu-item-normal-bg: transparent;
   --app-menu-item-active-color: #34495e;
-  --app-menu-item-normal-color: #97A3B1;
-  --app-menu-item-active-shadow: 0px 2px 15px rgba(0,0,0,0.05);
+  --app-menu-item-normal-color: #97a3b1;
+  --app-menu-item-active-shadow: 0px 2px 15px rgba(0, 0, 0, 0.05);
 
   --app-menu-item-user-card-bg: #ffffff;
+
+  // home-search
+  --home-header-search-list-item-name-color: #42b883;
+  --home-header-search-list-item-desc-color: #ccc;
 }
