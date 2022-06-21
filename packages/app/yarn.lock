@@ -263,6 +263,11 @@
     "@babel/helper-validator-identifier" "^7.16.7"
     to-fast-properties "^2.0.0"
 
+"@formkit/auto-animate@^1.0.0-beta.1":
+  version "1.0.0-beta.1"
+  resolved "https://registry.yarnpkg.com/@formkit/auto-animate/-/auto-animate-1.0.0-beta.1.tgz#aec5fd2ea5e499ceb7eb117c7fd1217a7f100748"
+  integrity sha512-I3OWOBaPZKSJL4bsooXI8kC3q7bcgibD2oML0P/Lir6MnbvUe/0/7EH8br024juvM/Ulm9C9xGx9CJUQYrOWSA==
+
 "@fortawesome/fontawesome-free@^6.1.1":
   version "6.1.1"
   resolved "https://registry.yarnpkg.com/@fortawesome/fontawesome-free/-/fontawesome-free-6.1.1.tgz#bf5d45611ab74890be386712a0e5d998c65ee2a1"
@@ -497,6 +502,27 @@
   resolved "https://registry.yarnpkg.com/@vue/shared/-/shared-3.2.37.tgz#8e6adc3f2759af52f0e85863dfb0b711ecc5c702"
   integrity sha512-4rSJemR2NQIo9Klm1vabqWjD8rs/ZaJSzMxkMNeJS6lHiUjjUeYFbooN19NgFjztubEKh3WlZUeOLVdbbUWHsw==
 
+"@vueuse/core@^8.7.4":
+  version "8.7.4"
+  resolved "https://registry.yarnpkg.com/@vueuse/core/-/core-8.7.4.tgz#39cec3e63faa8943be67121a176fbd84939c2b80"
+  integrity sha512-dQgxjb79PDcizlaclgCkCzNoqNv12PnbXxUOFL9VacakmD/ACoSMWwTpcG3HKoDoYyl2V3kSW/8AkvXGEYEGFA==
+  dependencies:
+    "@vueuse/metadata" "8.7.4"
+    "@vueuse/shared" "8.7.4"
+    vue-demi "*"
+
+"@vueuse/metadata@8.7.4":
+  version "8.7.4"
+  resolved "https://registry.yarnpkg.com/@vueuse/metadata/-/metadata-8.7.4.tgz#211a2a095504dd34c3d8881f4b1989e67662e9f5"
+  integrity sha512-CwEYS6/M6JDxk9D1mUsZq3F0VnYnf39rAxOytP58vb4BrhmPKEVfiSpvxuYcJimU9ccT/xjWhwBnsdGC2H9mIQ==
+
+"@vueuse/shared@8.7.4":
+  version "8.7.4"
+  resolved "https://registry.yarnpkg.com/@vueuse/shared/-/shared-8.7.4.tgz#c9ddff6515c0898bb28d00a38dccc62d9be35887"
+  integrity sha512-QhwTEd2Gr/8ZliWVEM8sbMUkXtVVV1Mt1mOkCnIbIN33D/V28FwGKUKqEPGZZCXuJchARnun/J1TAiT/UmZd1w==
+  dependencies:
+    vue-demi "*"
+
 animate.css@^4.1.1:
   version "4.1.1"
   resolved "https://registry.yarnpkg.com/animate.css/-/animate.css-4.1.1.tgz#614ec5a81131d7e4dc362a58143f7406abd68075"
@@ -612,6 +638,11 @@ convert-source-map@^1.7.0:
   integrity sha512-+OQdjP49zViI/6i7nIJpA8rAl4sV/JdPfU9nZs3VqOwGIgizICvuN2ru6fMd+4llL0tar18UYJXfZ/TWtmhUjA==
   dependencies:
     safe-buffer "~5.1.1"
+
+countup.js@^2.2.0:
+  version "2.2.0"
+  resolved "https://registry.yarnpkg.com/countup.js/-/countup.js-2.2.0.tgz#e20e247abf801190056c5eeed51ceb13cef6ea0c"
+  integrity sha512-m0TvFNXm9/eFqJm+QiKVI8e0wRUHzlQSewz9dqVjlhl2DFoZtceLbomwzxHz0hJ1+r4zBC7wSpR/TpthG49h6g==
 
 csstype@^2.6.8:
   version "2.6.20"
@@ -930,6 +961,11 @@ mime-types@^2.1.12:
   dependencies:
     mime-db "1.52.0"
 
+moment@^2.29.3:
+  version "2.29.3"
+  resolved "https://registry.yarnpkg.com/moment/-/moment-2.29.3.tgz#edd47411c322413999f7a5940d526de183c031f3"
+  integrity sha512-c6YRvhEo//6T2Jz/vVtYzqBzwvPT95JBQ+smCytzf7c50oMZRsR/a4w88aD34I+/QVSfnoAnSBFPJHItlOMJVw==
+
 ms@2.1.2:
   version "2.1.2"
   resolved "https://registry.yarnpkg.com/ms/-/ms-2.1.2.tgz#d09d1f357b443f493382a8eb3ccd183872ae6009"
@@ -1068,11 +1104,6 @@ typescript@^4.5.4:
   resolved "https://registry.yarnpkg.com/typescript/-/typescript-4.7.4.tgz#1a88596d1cf47d59507a1bcdfb5b9dfe4d488235"
   integrity sha512-C0WQT0gezHuw6AdY1M2jxUO83Rjf0HP7Sk1DtXj6j1EwkQNZrHAg2XPWlq62oqEhYvONq5pkC2Y9oPljWToLmQ==
 
-v-click-outside@^3.2.0:
-  version "3.2.0"
-  resolved "https://registry.yarnpkg.com/v-click-outside/-/v-click-outside-3.2.0.tgz#850ac3f52d66d84b9f7e8002a1bcadcafec5534e"
-  integrity sha512-QD0bDy38SHJXQBjgnllmkI/rbdiwmq9RC+/+pvrFjYJKTn8dtp7Penf9q1lLBta280fYG2q53mgLhQ+3l3z74w==
-
 vite@^2.9.9:
   version "2.9.12"
   resolved "https://registry.yarnpkg.com/vite/-/vite-2.9.12.tgz#b1d636b0a8ac636afe9d83e3792d4895509a941b"
@@ -1084,6 +1115,11 @@ vite@^2.9.9:
     rollup "^2.59.0"
   optionalDependencies:
     fsevents "~2.3.2"
+
+vue-demi@*:
+  version "0.13.1"
+  resolved "https://registry.yarnpkg.com/vue-demi/-/vue-demi-0.13.1.tgz#7604904c88be338418a10abbc94d5b8caa14cb8c"
+  integrity sha512-xmkJ56koG3ptpLnpgmIzk9/4nFf4CqduSJbUM0OdPoU87NwRuZ6x49OLhjSa/fC15fV+5CbEnrxU4oyE022svg==
 
 vue-router@^4.0.16:
   version "4.0.16"
