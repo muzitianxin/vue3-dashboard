@@ -154,7 +154,7 @@ const handleMouseout = (e: MouseEvent) => {
 
 <style lang="scss" scoped>
 .insurance-card {
-  border-radius: 30px;
+  border-radius: var(--home-card-border-radius);
   margin-left: 10px;
   margin-right: 10px;
   position: relative;

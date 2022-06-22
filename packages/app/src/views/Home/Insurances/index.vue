@@ -34,7 +34,7 @@ const activeTab = useStorage("home-insurances-active-tab", 0);
         v-for="(group, index) in groupedInsurancelist"
         :key="index"
         :name="index"
-        class="row no-wrap q-px-none q-px-xl q-pb-xl q-pt-lg"
+        class="row no-wrap q-px-none q-pl-xl q-pr-lg q-pb-xl q-pt-lg"
       >
         <InsuranceCard
           class="col-grow full-height"
