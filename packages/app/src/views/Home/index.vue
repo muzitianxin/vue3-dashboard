@@ -1,11 +1,12 @@
 <script lang="ts" setup>
+import Agents from "./Agents/index.vue";
 import Search from "./header/Search.vue";
 import GitRef from "./header/GitRef.vue";
-import TinyCalendar from "./header/TinyCalendar.vue";
 import FireBadge from "./header/FireBadge.vue";
-import SmallBadges from "./header/SmallBadges.vue";
 import Insurances from "./Insurances/index.vue";
-import Agents from "./Agents.vue";
+import SmallBadges from "./header/SmallBadges.vue";
+import TinyCalendar from "./header/TinyCalendar.vue";
+
 </script>
 
 <template>
@@ -31,7 +32,7 @@ import Agents from "./Agents.vue";
 
     <div class="full-width row items-strentch q-pr-xl">
       <Insurances style="width: 0" class="col-grow" />
-      <Agents class="home-right-side" />
+      <Agents class="home-right-side self-stretch q-mb-xl q-mt-lg" />
     </div>
   </div>
 </template>

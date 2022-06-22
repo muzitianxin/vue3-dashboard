@@ -1,8 +1,10 @@
 <script lang="ts" setup>
-import { defineProps, ref, onMounted } from "vue";
-import Btn from "../../../components/base/Btn/Btn.vue";
 import { CountUp } from "countup.js";
+import { defineProps, ref, onMounted } from "vue";
+
 import TinyLineChart from "./TinyLineChart.vue";
+import Btn from "../../../components/base/Btn/Btn.vue";
+
 import { randomInt } from "../../../utils/random-int";
 
 defineProps({
@@ -11,6 +13,7 @@ defineProps({
   subtitle: { type: String, default: "Subtitle" },
   color: { type: String, default: "#F1C40F" },
   icon: { type: String },
+  primary: { type: String, default: null },
 });
 const subtitleNum = ref();
 const count = ref();
@@ -18,6 +21,9 @@ const countPercent = ref();
 const countDown = ref();
 const countUp = ref();
 const countCollect = ref();
+const card = ref();
+const transform = ref("none");
+const transformShadow = ref("none");
 
 const applyCountUp = (dom: any, random?: number, opts?: any) => {
   if (!random) random = randomInt(9999);
@@ -36,100 +42,132 @@ onMounted(() => {
   applyCountUp(countUp.value, randomInt(99999), { prefix: "" });
   applyCountUp(countCollect.value, randomInt(200), { prefix: "" });
 });
+
+const handleMouseover = (e: MouseEvent) => {
+  const eX = e.offsetX,
+    eY = e.offsetY,
+    dim = card.value.getBoundingClientRect(),
+    w = dim.width / 2,
+    h = dim.height / 2,
+    tiltLimit = 15,
+    posX = (h - eY) * (tiltLimit / h),
+    posY = (w - eX) * (tiltLimit / w) * -1;
+
+  transform.value = `rotateX(${posX}deg) rotateY(${posY}deg)`;
+  transformShadow.value = `${posY * -1}px ${
+    posX + 14
+  }px 24px 0 rgba( 0, 0, 0, 0.02 )`;
+};
+const handleMouseout = (e: MouseEvent) => {
+  transform.value = "none";
+  transformShadow.value = "none";
+};
 </script>
 
 <template>
-  <div class="insurance-card" :class="{ pinned }" :style="{ '--color': color }">
-    <div class="fit relative-position insurance-card-display column no-wrap">
-      <header class="row no-wrap items-center justify-between">
-        <div class="row no-wrap items-center">
-          <div class="insurance-card-icon">
-            <q-icon :name="icon" size="1rem" />
-          </div>
-          <div class="q-ml-sm insurance-card-brief">
-            <div class="insurance-card-title">
-              {{ title }}
+  <div
+    ref="card"
+    class="insurance-card"
+    :class="{ pinned }"
+    :style="{ '--color': color, '--q-primary': primary }"
+    @mouseover="handleMouseover"
+    @mouseout="handleMouseout"
+  >
+    <div
+      class="fit insurance-card-mask transition-1"
+      :style="{ transform, boxShadow: transformShadow }"
+    >
+      <div class="fit relative-position insurance-card-display column no-wrap">
+        <header class="row no-wrap items-center justify-between">
+          <div class="row no-wrap items-center">
+            <div class="insurance-card-icon">
+              <q-icon :name="icon" size="1rem" />
             </div>
-            <div class="insurance-card-subtitle">
-              <span ref="subtitleNum" class="q-mr-xs"></span>
-              <span>{{ subtitle }}</span>
+            <div class="q-ml-sm insurance-card-brief">
+              <div class="insurance-card-title">
+                {{ title }}
+              </div>
+              <div class="insurance-card-subtitle">
+                <span ref="subtitleNum" class="q-mr-xs"></span>
+                <span>{{ subtitle }}</span>
+              </div>
             </div>
           </div>
-        </div>
 
-        <div class="row no-wrap items-center">
-          <q-icon
-            name="fas fa-thumbtack"
-            size="12px"
-            class="q-mr-xs text-white"
-            v-if="pinned"
+          <div class="row no-wrap items-center">
+            <q-icon
+              name="fas fa-thumbtack"
+              size="12px"
+              class="q-mr-xs text-white"
+              v-if="pinned"
+              style="transform: scale(0.7) rotate(45deg)"
+            />
+            <Btn
+              type="flat"
+              icon="fas fa-angle-right"
+              class="q-pa-xs"
+              :size="24"
+              :color="pinned ? 'white' : 'primary'"
+            />
+          </div>
+        </header>
+
+        <main
+          class="row no-wrap justify-between items-center col-grow"
+          style="height: 0"
+        >
+          <div class="row no-wrap items-center">
+            <div class="insurance-card-count" ref="count"></div>
+            <div class="insurance-card-count-percent" ref="countPercent"></div>
+          </div>
+
+          <TinyLineChart
+            :gap="randomInt(5, 1)"
+            style="width: 100px; height: 50px"
+            :color="color"
           />
-          <Btn
-            type="flat"
-            icon="fas fa-angle-right"
-            class="q-pa-xs"
-            :size="24"
-            :color="pinned ? 'white' : 'primary'"
-          />
-        </div>
-      </header>
+        </main>
 
-      <main
-        class="row no-wrap justify-between items-center col-grow"
-        style="height: 0"
-      >
-        <div class="row no-wrap items-center">
-          <div class="insurance-card-count" ref="count"></div>
-          <div class="insurance-card-count-percent" ref="countPercent"></div>
-        </div>
+        <footer class="row no-wrap items-center justify-between">
+          <div class="row no-wrap items-center tiny-count down-count">
+            <q-icon name="fas fa-arrow-down" style="color: #1abc9c" />
+            <span ref="countDown"></span>
+            <span class="unit">USD</span>
+          </div>
 
-        <TinyLineChart
-          :gap="randomInt(5, 1)"
-          style="width: 100px; height: 50px"
-          :color="color"
-        />
-      </main>
+          <div class="row no-wrap items-center tiny-count up-count">
+            <q-icon name="fas fa-arrow-up" style="color: #ff3938" />
+            <span ref="countUp"></span>
+            <span class="unit">USD</span>
+          </div>
 
-      <footer class="row no-wrap items-center justify-between">
-        <div class="row no-wrap items-center tiny-count down-count">
-          <q-icon name="fas fa-arrow-down" style="color: #1abc9c" />
-          <span ref="countDown"></span>
-          <span class="unit">USD</span>
-        </div>
-
-        <div class="row no-wrap items-center tiny-count up-count">
-          <q-icon name="fas fa-arrow-up" style="color: #ff3938" />
-          <span ref="countUp"></span>
-          <span class="unit">USD</span>
-        </div>
-
-        <div class="row no-wrap items-center tiny-count collect-count">
-          <q-icon name="far fa-star" style="color: #f1c40f" />
-          <span ref="countCollect"></span>
-          <span class="unit">VIP</span>
-        </div>
-      </footer>
+          <div class="row no-wrap items-center tiny-count collect-count">
+            <q-icon name="far fa-star" style="color: #f1c40f" />
+            <span ref="countCollect"></span>
+            <span class="unit">VIP</span>
+          </div>
+        </footer>
+      </div>
     </div>
   </div>
 </template>
 
 <style lang="scss" scoped>
 .insurance-card {
-  border-radius: 30px;
-  padding: 30px;
+  border-radius: var(--home-card-border-radius);
   margin-left: 10px;
   margin-right: 10px;
   position: relative;
   cursor: pointer;
   transition: all 0.1s ease;
 
+  perspective: 600px;
+  perspective-origin: 50% 50%;
+  transform-style: preserve-3d;
+
   &:hover {
     transform: scale(1.05);
   }
-
-  background-color: #fff;
-  box-shadow: 0px 20px 20px rgba(0, 0, 0, 0.02),
-    0px 10px 40px rgba(0, 0, 0, 0.03);
 
   &:nth-child(1) {
     margin-left: 0px;
@@ -151,6 +189,14 @@ onMounted(() => {
 
   &-display {
     z-index: 1;
+    padding: 30px;
+    border-radius: inherit;
+    box-shadow: 0px 20px 20px rgba(0, 0, 0, 0.02),
+      0px 10px 40px rgba(0, 0, 0, 0.03);
+  }
+  &-mask {
+    border-radius: inherit;
+    background-color: #fff;
   }
   &-brief {
     color: var(--text-color);
@@ -186,11 +232,14 @@ onMounted(() => {
   }
 
   &.pinned {
-    background-color: var(--q-primary);
+    .insurance-card-mask {
+      background-color: var(--q-primary);
+    }
+
     box-shadow: none;
 
-    &::after,
-    &::before {
+    & .insurance-card-mask::after,
+    & .insurance-card-mask::before {
       content: "";
       width: 100%;
       height: 100%;
@@ -201,14 +250,14 @@ onMounted(() => {
       z-index: 0;
     }
 
-    &::before {
+    & .insurance-card-mask::before {
       background: linear-gradient(
         135deg,
         rgba(255, 255, 255, 0.1),
         rgba(0, 0, 0, 0.2)
       );
     }
-    &::after {
+    & .insurance-card-mask::after {
       box-shadow: 0px 20px 20px var(--q-primary), 0px 10px 40px var(--q-primary);
       opacity: 0.12;
     }
