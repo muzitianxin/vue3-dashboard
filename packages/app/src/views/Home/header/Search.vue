@@ -7,13 +7,11 @@ const showMenu = ref(false);
 
 const show = () => {
   nextTick(() => {
-    console.log("show");
     showMenu.value = true;
   });
 };
 const hide = () => {
   nextTick(() => {
-    console.log("hide");
     showMenu.value = false;
   });
 };
