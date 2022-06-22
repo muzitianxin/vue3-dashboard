@@ -2,7 +2,7 @@
 import Indicators from "./Indicators.vue";
 import { useStorage } from "@vueuse/core";
 import { insuranceList, Insurance } from "./insurance-list";
-import { computed } from "vue";
+import { computed, onBeforeUnmount, onMounted } from "vue";
 import InsuranceCard from "./InsuranceCard.vue";
 
 const groupedInsurancelist = computed(() => {
@@ -15,6 +15,16 @@ const groupedInsurancelist = computed(() => {
 });
 
 const activeTab = useStorage("home-insurances-active-tab", 0);
+let autoPlayer: any = null;
+
+onMounted(() => {
+  autoPlayer = setInterval(() => {
+    activeTab.value = (activeTab.value + 1) % groupedInsurancelist.value.length;
+  }, 10000);
+});
+onBeforeUnmount(() => {
+  clearInterval(autoPlayer);
+});
 </script>
 
 <template>
