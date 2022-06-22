@@ -7,6 +7,7 @@ export interface Insurance {
 
   group: number;
   pinned?: boolean;
+  primary?: string; // 覆盖主题色
 }
 
 export const insuranceList: Array<Insurance> = [
@@ -37,6 +38,7 @@ export const insuranceList: Array<Insurance> = [
     group: 1,
     pinned: true,
     icon: "fas fa-house-crack",
+    primary: "#117A65",
   },
   {
     id: "B2",
@@ -56,6 +58,7 @@ export const insuranceList: Array<Insurance> = [
     group: 2,
     pinned: true,
     icon: "fas fa-car",
+    primary: "#2C3E50"
   },
   {
     id: "C2",
@@ -65,5 +68,5 @@ export const insuranceList: Array<Insurance> = [
     group: 2,
     pinned: false,
     icon: "fas fa-plane",
-  }
+  },
 ];

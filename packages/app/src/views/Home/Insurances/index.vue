@@ -46,6 +46,7 @@ const activeTab = useStorage("home-insurances-active-tab", 0);
           :subtitle="card.subtitle"
           :icon="card.icon"
           :color="card.color"
+          :primary="card.primary"
         />
       </q-tab-panel>
     </q-tab-panels>
