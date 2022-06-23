@@ -48,14 +48,8 @@ onMounted(() => {
       type: "line",
       areaStyle: {
         color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
-          {
-            offset: 0,
-            color: props.color,
-          },
-          {
-            offset: 0.8,
-            color: props.color + "00",
-          },
+          { offset: 0, color: props.color },
+          { offset: 0.8, color: props.color + "00" },
         ]),
       },
       itemStyle: {

@@ -44,6 +44,7 @@ onMounted(() => {
 });
 
 const handleMouseover = (e: MouseEvent) => {
+  if (!card.value) return;
   const eX = e.offsetX,
     eY = e.offsetY,
     dim = card.value.getBoundingClientRect(),
