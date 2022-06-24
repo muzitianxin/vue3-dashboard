@@ -20,7 +20,7 @@ let autoPlayer: any = null;
 onMounted(() => {
   autoPlayer = setInterval(() => {
     activeTab.value = (activeTab.value + 1) % groupedInsurancelist.value.length;
-  }, 10000);
+  }, 30000);
 });
 onBeforeUnmount(() => {
   clearInterval(autoPlayer);
@@ -45,6 +45,7 @@ onBeforeUnmount(() => {
         :key="index"
         :name="index"
         class="row no-wrap q-px-none q-pl-xl q-pr-lg q-pb-xl q-pt-lg"
+        style="overflow: hidden"
       >
         <InsuranceCard
           class="col-grow full-height"

@@ -1,7 +1,8 @@
 import { ref } from "vue";
+import { useStorage } from '@vueuse/core';
 
 // 是否折叠应用菜单
-const foldMenu = ref(false);
+const foldMenu = useStorage("__foldAppMenu__", false);
 
 export function useMenu() {
   /**

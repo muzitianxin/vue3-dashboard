@@ -30,7 +30,7 @@ const startChange = () => {
 };
 
 onMounted(() => {
-  instance = echarts.init(tinyLineChart.value);
+  instance = echarts.init(tinyLineChart.value, undefined, { renderer: "svg" });
   const hideAxis = {
     axisLine: { show: false },
     axisTick: { show: false },
