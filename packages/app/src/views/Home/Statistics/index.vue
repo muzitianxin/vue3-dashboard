@@ -2,29 +2,27 @@
 import moment from "moment";
 import { merge } from "lodash";
 import * as echarts from "echarts";
+import { useStorage } from "@vueuse/core";
 import { onMounted, ref, watch, Ref, nextTick } from "vue";
 import ResizeSensor from "css-element-queries/src/ResizeSensor";
 
-import legendA from "./assets/legend_red.svg";
-import legendB from "./assets/legend_green.svg";
+import Legends from "./Legends.vue";
+import GroupSelect from "./GroupSelect.vue";
 
 import { randomInt } from "../../../utils/random-int";
 
 enum GroupBy {
-  DAY = "day",
-  MONTH = "month",
-  YEAR = "year",
+  DAY = "Day",
+  YEAR = "Year",
+  MONTH = "Month",
 }
 
 const length = 10;
 const chart = ref();
-const range: Ref<GroupBy> = ref(GroupBy.DAY);
+const range = useStorage("home-statistics-range", GroupBy.DAY);
 const inited = ref(false);
 const dataCache = ref(new Map<GroupBy, Record<"A" | "B", number[]>>());
-const legends = [
-  { name: "Expenses", asset: legendA },
-  { name: "Payments", asset: legendB },
-];
+const allGroupTypes = [GroupBy.DAY, GroupBy.MONTH, GroupBy.YEAR];
 
 let instance: echarts.ECharts | null = null;
 
@@ -47,7 +45,9 @@ const getAxisDataByGroupType = (groupType: GroupBy) => {
       data.push(`${raw}__`);
     }
   }
-  return ["start", ...data, "end"];
+  const realValue = ["start", ...data, "end"];
+  const helpValue = realValue.map((_, i) => i);
+  return { realValue, helpValue };
 };
 
 const basesOpt = {
@@ -65,11 +65,6 @@ const basesOpt = {
     },
     axisLabel: {
       interval: 0,
-      formatter: (value: string, index: number) => {
-        const [bold, thin] = value.split("__");
-        if (index === 0 || index === length + 1) return "";
-        return `{bold|${bold}}{thin|${thin}}`;
-      },
       rich: {
         bold: {
           fontWeight: "bold",
@@ -118,6 +113,7 @@ const basesOpt = {
       type: "line",
       smooth: 0.45,
       showSymbol: false,
+      animationEasing: "cubicInOut",
       lineStyle: {
         color: new echarts.graphic.LinearGradient(0, 0, 1, 0, [
           { offset: 0, color: "#FF393890" },
@@ -134,6 +130,7 @@ const basesOpt = {
       type: "line",
       smooth: 0.45,
       showSymbol: false,
+      animationEasing: "quadraticOut",
       lineStyle: {
         color: new echarts.graphic.LinearGradient(0, 0, 1, 0, [
           { offset: 0, color: "#51E4A720" },
@@ -160,49 +157,47 @@ const getDataByGroupType = (groupType: GroupBy) => {
 
 const renderChart = (range = GroupBy.DAY) => {
   if (!instance) return;
-  const xAxisData = getAxisDataByGroupType(range);
+  const { realValue, helpValue } = getAxisDataByGroupType(range);
   const { A, B } = getDataByGroupType(range);
   let opt = {
     xAxis: {
-      data: xAxisData,
+      data: helpValue,
+      axisLabel: {
+        formatter: (_: string, index: number) => {
+          const value = realValue[index];
+          const [bold, thin] = value.split("__");
+          if (index === 0 || index === length + 1) return "";
+          return `{bold|${bold}}{thin|${thin}}`;
+        },
+      },
     },
     series: [{ data: A }, { data: B }],
   };
-  if (!inited) opt = merge(basesOpt, opt);
-  instance.setOption(opt);
+  if (!inited.value) opt = merge(basesOpt, opt);
+  setTimeout(() => {
+    instance && instance.setOption(opt);
+    inited.value = true;
+  }, 100);
 };
 
 onMounted(() => {
   instance = echarts.init(chart.value);
-  instance.setOption(basesOpt);
+  renderChart(range.value as GroupBy);
 
-  console.log({ ResizeSensor });
-  new ResizeSensor(chart.value, () => {
-    instance && instance.resize();
-  });
+  new ResizeSensor(chart.value, () => instance && instance.resize());
 });
 
 watch(
-  () => range,
-  (r) => nextTick(() => renderChart(r.value)),
-  { immediate: true }
+  () => range.value,
+  (r) => nextTick(() => r && renderChart(r as GroupBy))
 );
 </script>
 
 <template>
   <div class="home-statistic column no-wrap bg-white q-pa-lg">
     <header class="row full-width justify-between no-wrap items-center">
-      <div class="row no-wrap items-center">
-        <div
-          v-for="(l, index) in legends"
-          :key="index"
-          class="row no-wrap items-center home-statistic-legend"
-        >
-          <img style="height: 16px" :src="l.asset" class="q-mr-sm" />
-          <span class="text-bold">{{ l.name }}</span>
-        </div>
-      </div>
-      <span>select</span>
+      <Legends />
+      <GroupSelect :auto-play="3000" v-model="range" :types="allGroupTypes" />
     </header>
 
     <main ref="chart" class="col-grow full-width" style="height: 0"></main>
@@ -213,11 +208,5 @@ watch(
 .home-statistic {
   border-radius: var(--home-card-border-radius);
   box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.05);
-
-  &-legend {
-    &:not(:nth-last-child(1)) {
-      margin-right: 20px;
-    }
-  }
 }
 </style>
