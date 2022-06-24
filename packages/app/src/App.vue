@@ -38,7 +38,7 @@ body {
   left: 50%;
   top: 50%;
   transform: translate(-50%, -50%);
-  &::after {
+  /* &::after {
     content: "";
     position: absolute;
     width: calc(100% + 4px);
@@ -50,7 +50,9 @@ body {
     border-radius: calc(var(--view-border-radius) + 1px);
     box-shadow: 0px 30px 30px rgba(0, 0, 0, 0.058),
       0px 0px 5px rgba(0, 0, 0, 0.01), 0px 50px 80px rgba(0, 0, 0, 0.05);
-  }
+  } */
+  box-shadow: 0px 30px 30px rgba(0, 0, 0, 0.058),
+    0px 0px 5px rgba(0, 0, 0, 0.01), 0px 50px 80px rgba(0, 0, 0, 0.05);
 
   ._display-frame {
     width: 100%;

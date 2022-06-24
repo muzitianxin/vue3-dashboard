@@ -33,10 +33,57 @@ onMounted(() => {
         </div>
       </div>
     </Btn>
-    <q-menu :offset="[0, 5]">
+    <q-menu class="home-tiny-calendar" :offset="[0, 5]">
       <q-card>
         <q-date v-model="today"></q-date>
       </q-card>
     </q-menu>
   </div>
 </template>
+
+<style lang="scss">
+.home-tiny-calendar {
+  .q-card {
+    box-shadow: none;
+  }
+  .q-date__header {
+    position: relative;
+    &::after {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(
+        135deg,
+        rgba(255, 255, 255, 0.05) 0%,
+        rgba(0, 0, 0, 0.2) 100%
+      );
+    }
+  }
+
+  .q-date__navigation {
+    color: var(--text-color);
+    .q-date__arrow i {
+      font-size: 0.7rem;
+    }
+  }
+
+  .q-date__calendar-weekdays {
+    opacity: 0.75;
+    font-weight: 500;
+  }
+
+  .q-date__calendar-days-container {
+    color: var(--text-color);
+
+    .q-date__calendar-item button.bg-primary {
+      &::before {
+        box-shadow: 0px 2px 2px var(--q-primary);
+        opacity: 0.1 !important;
+      }
+    }
+  }
+}
+</style>

@@ -1,11 +1,12 @@
 <script lang="ts" setup>
 import { CountUp } from "countup.js";
-import { defineProps, ref, onMounted } from "vue";
+import { defineProps, ref, onMounted, reactive } from "vue";
 
 import TinyLineChart from "./TinyLineChart.vue";
 import Btn from "../../../components/base/Btn/Btn.vue";
 
 import { randomInt } from "../../../utils/random-int";
+import { dom } from "quasar";
 
 defineProps({
   pinned: { type: Boolean, default: false },
@@ -24,6 +25,7 @@ const countCollect = ref();
 const card = ref();
 const transform = ref("none");
 const transformShadow = ref("none");
+const highlightStyle = ref({ transform: "none", opacity: "0" });
 
 const applyCountUp = (dom: any, random?: number, opts?: any) => {
   if (!random) random = randomInt(9999);
@@ -45,9 +47,11 @@ onMounted(() => {
 
 const handleMouseover = (e: MouseEvent) => {
   if (!card.value) return;
-  const eX = e.offsetX,
-    eY = e.offsetY,
+  const cX = e.clientX,
+    cY = e.clientY,
     dim = card.value.getBoundingClientRect(),
+    eX = cX - dim.left,
+    eY = cY - dim.top,
     w = dim.width / 2,
     h = dim.height / 2,
     tiltLimit = 15,
@@ -58,10 +62,15 @@ const handleMouseover = (e: MouseEvent) => {
   transformShadow.value = `${posY * -1}px ${
     posX + 14
   }px 24px 0 rgba( 0, 0, 0, 0.02 )`;
+  highlightStyle.value = {
+    transform: `translate3d(${posX * -4}px, ${posY * -4}px, 0)`,
+    opacity: "1",
+  };
 };
 const handleMouseout = (e: MouseEvent) => {
   transform.value = "none";
   transformShadow.value = "none";
+  highlightStyle.value = { transform: "none", opacity: "0" };
 };
 </script>
 
@@ -71,17 +80,21 @@ const handleMouseout = (e: MouseEvent) => {
     class="insurance-card"
     :class="{ pinned }"
     :style="{ '--color': color, '--q-primary': primary }"
-    @mouseover="handleMouseover"
-    @mouseout="handleMouseout"
+    @mouseover.capture="handleMouseover"
+    @mouseleave="handleMouseout"
   >
     <div
-      class="fit insurance-card-mask transition-1"
-      :style="{ transform, boxShadow: transformShadow }"
+      class="fit insurance-card-mask"
+      :style="{
+        transform,
+        boxShadow: transformShadow,
+        transition: 'all 0.25s ease',
+      }"
     >
       <div class="fit relative-position insurance-card-display column no-wrap">
         <header class="row no-wrap items-center justify-between">
           <div class="row no-wrap items-center">
-            <div class="insurance-card-icon">
+            <div class="insurance-card-icon transition-1">
               <q-icon :name="icon" size="1rem" />
             </div>
             <div class="q-ml-sm insurance-card-brief">
@@ -149,6 +162,9 @@ const handleMouseout = (e: MouseEvent) => {
           </div>
         </footer>
       </div>
+      <div class="insurance-card-highlight-mask fit absolute">
+        <!-- <div class="insurance-card-highlight" :style="highlightStyle"></div> -->
+      </div>
     </div>
   </div>
 </template>
@@ -165,17 +181,6 @@ const handleMouseout = (e: MouseEvent) => {
   perspective: 600px;
   perspective-origin: 50% 50%;
   transform-style: preserve-3d;
-
-  &:hover {
-    transform: scale(1.05);
-  }
-
-  &:nth-child(1) {
-    margin-left: 0px;
-  }
-  &:nth-last-child(1) {
-    margin-right: 0px;
-  }
 
   &-icon {
     width: 40px;
@@ -220,6 +225,29 @@ const handleMouseout = (e: MouseEvent) => {
     margin-left: 10px;
     color: var(--color);
   }
+  &-highlight-mask {
+    left: 0;
+    top: 0;
+    border-radius: inherit;
+    position: absolute;
+    overflow: hidden;
+  }
+  &-highlight {
+    display: block;
+    position: absolute;
+    width: 400px;
+    height: 400px;
+    top: 0;
+    right: 0;
+    opacity: 0;
+    z-index: -1;
+    transition: opacity 0.25s ease;
+    background: radial-gradient(
+      150px at 50%,
+      rgba(255, 255, 255, 0.13) 0%,
+      rgba(255, 255, 255, 0) 100%
+    );
+  }
 
   .tiny-count {
     font-size: 0.7rem;
@@ -230,6 +258,31 @@ const handleMouseout = (e: MouseEvent) => {
     & .unit {
       opacity: 0.2;
     }
+  }
+
+  &:hover {
+    transform: scale(1.05);
+    .insurance-card-icon {
+      opacity: 1;
+
+      i {
+        animation: jump 0.6s ease 0.2s 1 normal forwards;
+      }
+      @keyframes jump {
+        0% {
+        }
+        50% {
+          transform: translateY(-5px) scale(1.05) rotate(-20deg);
+        }
+      }
+    }
+  }
+
+  &:nth-child(1) {
+    margin-left: 0px;
+  }
+  &:nth-last-child(1) {
+    margin-right: 0px;
   }
 
   &.pinned {
