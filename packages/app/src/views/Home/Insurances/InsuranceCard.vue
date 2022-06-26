@@ -136,7 +136,7 @@ const handleMouseout = (e: MouseEvent) => {
           </div>
 
           <TinyLineChart
-            :gap="randomInt(5, 1)"
+            :gap="randomInt(5, 2)"
             style="width: 100px; height: 50px"
             :color="color"
           />

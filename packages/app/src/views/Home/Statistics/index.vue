@@ -150,6 +150,28 @@ const basesOpt = {
       },
     },
   ],
+  // tooltip: {
+  //   show: true,
+  //   trigger: "axis",
+  //   axisPointer: {
+  //     type: "none",
+  //     axis: "x",
+  //     lineStyle: {
+  //       color: "transparent",
+  //     },
+  //   },
+  //   position: function (
+  //     pos: Array<number>,
+  //     params: unknown,
+  //     dom: Element,
+  //     rect: Record<string, any>,
+  //     size: { contentSize: [number, number]; viewSize: [number, number] }
+  //   ) {
+  //     return { top: "0%", left: pos[0] - size.contentSize[0] / 2 };
+  //   },
+  //   borderColor: "transparent",
+  //   formatter: "{a0}: {c0} {a1}: ${c1}",
+  // },
 };
 
 const getDataByGroupType = (groupType: GroupBy) => {
