@@ -1,14 +1,33 @@
 <script lang="ts" setup>
 import Sorter from "./Sorter.vue";
 import { useStorage } from "@vueuse/core";
+import { amountList, AmountItem } from "./amount-list";
+import { computed, Ref } from "vue";
+import AmountCard from "./AmountCard.vue";
 
-const orderItems = [
+const orderItems: Array<{ label: string; field: keyof AmountItem }> = [
   { label: "Last", field: "time" },
   { label: "Amt", field: "amount" },
 ];
 
-const field = useStorage("__homeAmountListField__", orderItems[0].field);
+const field: Ref<keyof AmountItem> = useStorage(
+  "__homeAmountListField__",
+  orderItems[0].field as any
+);
 const order = useStorage("__homeAmountListOrder__", "ASC");
+
+const sortedList = computed(() => {
+  const sortFn = (ia: AmountItem, ib: AmountItem) => {
+    let a = ia[field.value] as number;
+    let b = ib[field.value] as number;
+    if (field.value === "time") {
+      a = (a as unknown as Date).getTime();
+      b = (b as unknown as Date).getTime();
+    }
+    return order.value === "ASC" ? a - b : b - a;
+  };
+  return amountList.sort(sortFn);
+});
 </script>
 
 <template>
@@ -20,10 +39,15 @@ const order = useStorage("__homeAmountListOrder__", "ASC");
     </header>
 
     <main>
+      <div class="amount-list-header row no-wrap">
+        <div>Type</div>
+        <div>Amount</div>
+        <div>Status</div>
+      </div>
 
-      field: {{ field }}
-      <br />
-      desc: {{ order }}
+      <ul v-auto-animate>
+        <AmountCard v-for="item in sortedList" :key="item.id" :item="item" />
+      </ul>
     </main>
   </div>
 </template>

@@ -1,13 +1,5 @@
 <script lang="ts" setup>
-import { CountUp } from "countup.js";
-import { onMounted, ref } from "vue";
-
-const count = ref();
-
-onMounted(() => {
-  const countUp = new CountUp(count.value, 120, { prefix: "+" });
-  if (!countUp.error) countUp.start();
-});
+import { randomInt } from "../../../utils/random-int";
 </script>
 
 <template>
@@ -17,7 +9,11 @@ onMounted(() => {
     </div>
     <div class="fire-badge-label column q-ml-sm">
       <div class="text-bold">Fire Cases</div>
-      <div ref="count" class="text-caption"></div>
+      <div
+        ref="count"
+        v-count-up="{ endVal: randomInt(140, 110), prefix: '+' }"
+        class="text-caption"
+      ></div>
     </div>
   </div>
 </template>

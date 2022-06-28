@@ -1,21 +1,12 @@
 <script lang="ts" setup>
 import Btn from "../../../components/base/Btn/Btn.vue";
 import moment from "moment";
-import { onMounted, ref } from "vue";
-import { CountUp } from "countup.js";
+import { ref } from "vue";
 
 const now = moment();
 const date = now.format("D");
 const month = now.format("MMM");
 const today = ref(moment().format("YYYY/MM/DD"));
-
-const dateSpan = ref();
-onMounted(() => {
-  const countUp = new CountUp(dateSpan.value, parseInt(date), {
-    duration: 1,
-  });
-  if (!countUp.error) countUp.start();
-});
 </script>
 
 <template>
@@ -25,7 +16,7 @@ onMounted(() => {
         <q-icon name="fas fa-calendar-days" size="0.9rem" />
         <div class="q-ml-sm">
           <span
-            ref="dateSpan"
+            v-count-up="{ endVal: parseInt(date), duration: 1 }"
             class="q-mr-xs"
             style="display: inline-block; min-width: 20px"
           ></span>

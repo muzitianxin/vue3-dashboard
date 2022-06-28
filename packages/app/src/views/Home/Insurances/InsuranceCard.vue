@@ -1,12 +1,10 @@
 <script lang="ts" setup>
-import { CountUp } from "countup.js";
-import { defineProps, ref, onMounted, reactive } from "vue";
+import { defineProps, ref } from "vue";
 
 import TinyLineChart from "./TinyLineChart.vue";
 import Btn from "../../../components/base/Btn/Btn.vue";
 
 import { randomInt } from "../../../utils/random-int";
-import { dom } from "quasar";
 
 defineProps({
   pinned: { type: Boolean, default: false },
@@ -16,34 +14,10 @@ defineProps({
   icon: { type: String },
   primary: { type: String, default: null },
 });
-const subtitleNum = ref();
-const count = ref();
-const countPercent = ref();
-const countDown = ref();
-const countUp = ref();
-const countCollect = ref();
 const card = ref();
 const transform = ref("none");
 const transformShadow = ref("none");
 const highlightStyle = ref({ transform: "none", opacity: "0" });
-
-const applyCountUp = (dom: any, random?: number, opts?: any) => {
-  if (!random) random = randomInt(9999);
-  let { prefix } = opts || {};
-  if (prefix === undefined)
-    prefix = Math.random() < 0.3 ? "+" : Math.random() < 0.7 ? "-" : "";
-  const countUp = new CountUp(dom, random, { ...(opts || {}), prefix });
-  countUp.start();
-};
-
-onMounted(() => {
-  applyCountUp(subtitleNum.value);
-  applyCountUp(count.value, randomInt(99999), { prefix: "$" });
-  applyCountUp(countPercent.value, randomInt(99), { suffix: "%" });
-  applyCountUp(countDown.value, randomInt(99999), { prefix: "" });
-  applyCountUp(countUp.value, randomInt(99999), { prefix: "" });
-  applyCountUp(countCollect.value, randomInt(200), { prefix: "" });
-});
 
 const handleMouseover = (e: MouseEvent) => {
   if (!card.value) return;
@@ -102,7 +76,7 @@ const handleMouseout = (e: MouseEvent) => {
                 {{ title }}
               </div>
               <div class="insurance-card-subtitle">
-                <span ref="subtitleNum" class="q-mr-xs"></span>
+                <span v-count-up="randomInt(9999)" class="q-mr-xs"></span>
                 <span>{{ subtitle }}</span>
               </div>
             </div>
@@ -131,8 +105,14 @@ const handleMouseout = (e: MouseEvent) => {
           style="height: 0"
         >
           <div class="row no-wrap items-center">
-            <div class="insurance-card-count" ref="count"></div>
-            <div class="insurance-card-count-percent" ref="countPercent"></div>
+            <div
+              class="insurance-card-count"
+              v-count-up="{ endVal: randomInt(99999), prefix: '$' }"
+            ></div>
+            <div
+              class="insurance-card-count-percent"
+              v-count-up="{ endVal: randomInt(99), suffix: '%' }"
+            ></div>
           </div>
 
           <TinyLineChart
@@ -145,19 +125,19 @@ const handleMouseout = (e: MouseEvent) => {
         <footer class="row no-wrap items-center justify-between">
           <div class="row no-wrap items-center tiny-count down-count">
             <q-icon name="fas fa-arrow-down" style="color: #1abc9c" />
-            <span ref="countDown"></span>
+            <span v-count-up="randomInt(99999)"></span>
             <span class="unit">USD</span>
           </div>
 
           <div class="row no-wrap items-center tiny-count up-count">
             <q-icon name="fas fa-arrow-up" style="color: #ff3938" />
-            <span ref="countUp"></span>
+            <span v-count-up="randomInt(99999)"></span>
             <span class="unit">USD</span>
           </div>
 
           <div class="row no-wrap items-center tiny-count collect-count">
             <q-icon name="far fa-star" style="color: #f1c40f" />
-            <span ref="countCollect"></span>
+            <span v-count-up="randomInt(200)"></span>
             <span class="unit">VIP</span>
           </div>
         </footer>

@@ -29,7 +29,7 @@ const handleToggle = (field: string, active: boolean) => {
   } else {
     emits("update:field", field);
   }
-  emits("update:order", orderDict.value[field]);
+  emits("update:order", orderDict.value[field] ? "DESC" : "ASC");
 };
 </script>
 
