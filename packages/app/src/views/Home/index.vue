@@ -7,6 +7,7 @@ import Statistics from "./Statistics/index.vue";
 import Insurances from "./Insurances/index.vue";
 import SmallBadges from "./header/SmallBadges.vue";
 import TinyCalendar from "./header/TinyCalendar.vue";
+import AmountList from "./AmountList/index.vue";
 </script>
 
 <template>
@@ -40,14 +41,16 @@ import TinyCalendar from "./header/TinyCalendar.vue";
         <h4 class="q-mb-lg">Statistic</h4>
         <Statistics class="col-grow full-width" style="height: 0" />
       </div>
-      <div class="home-right-side self-stretch"></div>
+      <div class="home-right-side self-stretch">
+        <AmountList class="full-height" />
+      </div>
     </div>
   </div>
 </template>
 
 <style lang="scss">
 .home-right-side {
-  width: 200px;
+  width: 210px;
   flex-shrink: 0;
 }
 </style>
