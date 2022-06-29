@@ -21,6 +21,6 @@ const countup: DirectiveHook = function (el, binding) {
 
 export const vCountUp: Directive = {
   mounted: countup,
-  updated: countup,
+  // updated: countup,
   unmounted: function (el) {},
 };
