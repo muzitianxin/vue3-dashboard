@@ -50,7 +50,7 @@ import AmountList from "./AmountList/index.vue";
 
 <style lang="scss">
 .home-right-side {
-  width: 200px;
+  width: 210px;
   flex-shrink: 0;
 }
 </style>

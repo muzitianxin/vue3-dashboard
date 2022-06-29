@@ -1,5 +1,6 @@
 <script lang="ts" setup>
 import { PropType, computed, reactive, Ref, ref } from "vue";
+import { useStorage } from "@vueuse/core";
 
 interface SortItem {
   label: string;
@@ -19,7 +20,8 @@ const activeIndex = computed(() =>
   props.items.findIndex((item) => item.field === props.field)
 );
 
-const orderDict: Ref<Record<string, boolean>> = ref(
+const orderDict: Ref<Record<string, boolean>> = useStorage(
+  "__homeAmountSorterOrderDict__",
   props.items.reduce((res, curr) => ({ ...res, [curr.field]: !!curr.desc }), {})
 );
 
