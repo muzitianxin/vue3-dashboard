@@ -5,6 +5,7 @@
   "scripts": {
     "dev": "vite",
     "build": "vue-tsc --noEmit && vite build",
+    "build:github-pages": "yarn build --outDir ../../docs",
     "preview": "vite preview"
   },
   "dependencies": {
