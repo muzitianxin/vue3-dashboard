@@ -33,8 +33,9 @@ const routes: Array<RouteRecordRaw> = [
   },
 ];
 
+console.log(import.meta.env.VITE_GITHUB_PAGES);
 const router = createRouter({
-  history: process.env.VITE_GITHUB_PAGES
+  history: import.meta.env.VITE_GITHUB_PAGES
     ? createWebHashHistory(process.env.BASE_URL)
     : createWebHistory(process.env.BASE_URL),
   routes,
