@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { Ref, ref, watch, computed } from "vue";
+import { Ref, ref, computed } from "vue";
 import { useRoute } from "vue-router";
 import { appMenuItems } from "../libs/menu";
 import { useMenu } from "../../../uses/use-menu";
@@ -44,7 +44,9 @@ const activeMenuIndex = computed(() => {
       <span class="app-menu-item-label transition-1 ellipsis">
         {{ m.label }}
       </span>
-      <q-tooltip v-if="foldMenu">{{ m.label }}</q-tooltip>
+      <q-tooltip v-if="foldMenu" anchor="center end" self="center start">
+        {{ m.label }}
+      </q-tooltip>
     </q-item>
 
     <!-- 指示器 -->
