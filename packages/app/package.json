@@ -5,7 +5,7 @@
   "scripts": {
     "dev": "vite",
     "build": "vue-tsc --noEmit && vite build",
-    "build:github-pages": "yarn build --outDir ../../docs --base /vue3-dashboard/ && yarn cp:404",
+    "build:github-pages": "rm -rf ../../docs && yarn build --outDir ../../docs --base /vue3-dashboard/ && yarn cp:404",
     "cp:404": "cd ../../docs && cp index.html 404.html",
     "preview": "vite preview"
   },
